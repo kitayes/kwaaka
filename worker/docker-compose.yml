@@ -1,0 +1,15 @@
+services:
+  worker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: kwaaka-worker
+    restart: always
+    env_file:
+      - .env
+    networks:
+      - kwaaka_net
+
+networks:
+  kwaaka_net:
+    external: true

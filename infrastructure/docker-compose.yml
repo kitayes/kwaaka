@@ -1,0 +1,45 @@
+version: "3.9"
+
+services:
+
+  mongo:
+    image: mongo:7
+    container_name: kwaaka-mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: rootpass
+    ports:
+      - "27017:27017"
+    volumes:
+      - ../mongo_data:/data/db
+      - ../mongo_init:/docker-entrypoint-initdb.d
+    networks:
+      - kwaaka_net
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 5s
+      timeout: 10s
+      retries: 5
+
+  rabbitmq:
+    image: rabbitmq:3.13-management
+    container_name: kwaaka-rabbit
+    restart: always
+    environment:
+      RABBITMQ_DEFAULT_USER: root
+      RABBITMQ_DEFAULT_PASS: rootpass
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - kwaaka_net
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "ping"]
+      interval: 5s
+      timeout: 10s
+      retries: 5
+
+networks:
+  kwaaka_net:
+    name: kwaaka_net

@@ -1,0 +1,17 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: kwaaka-api
+    restart: always
+    env_file:
+      - .env
+    networks:
+      - kwaaka_net
+    ports:
+      - "8080:8080"
+
+networks:
+  kwaaka_net:
+    external: true
