@@ -1,0 +1,10 @@
+.idea/*
+.env
+.vscode/*
+bin/
+.DS_Store
+code-quality-report.json
+config.json
+coverage.out.txt
+coverage.src.txt
+coverage.xml
